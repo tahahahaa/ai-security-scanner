@@ -1,0 +1,19 @@
+name: 'AI Security Scanner'
+description: 'Scans Pull Requests for OWASP Top 10 security vulnerabilities using AI'
+author: 'Muhammad Taha Sheikh'
+
+inputs:
+  groq-api-key:
+    description: 'Groq API Key'
+    required: true
+  github-token:
+    description: 'GitHub Token'
+    required: true
+
+runs:
+  using: 'python3'
+  main: 'scanner.py'
+
+branding:
+  icon: 'shield'
+  color: 'red'

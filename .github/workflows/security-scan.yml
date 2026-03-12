@@ -1,0 +1,30 @@
+name: AI Security Scanner
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Scan PR for OWASP vulnerabilities
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run AI Security Scanner
+        env:
+          INPUT_GROQ-API-KEY: ${{ secrets.GROQ_API_KEY }}
+          INPUT_GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: python scanner.py
